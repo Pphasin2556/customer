@@ -1,1 +1,424 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>R.Good Service — พอร์ทัลลูกค้า (Light)</title>
+<meta name="description" content="ศูนย์เอกสารและติดตามสถานะแบบเรียลไทม์ — โทนสว่าง">
+<style>
+  :root{
+    --bg:#f6f9fc;
+    --card:#ffffff;
+    --text:#24324b;
+    --muted:#71829e;
+    --line:#e6eef6;
+    --accent:#1b84ff;
+    --accent-2:#49b3ff;
+    --ok:#0a9e78;
+    --warn:#d78b00;
+    --danger:#d64545;
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:
+    radial-gradient(800px 400px at 10% -10%, rgba(27,132,255,.08), transparent 60%),
+    radial-gradient(700px 350px at 110% 0%, rgba(73,179,255,.06), transparent 60%),
+    var(--bg); color:var(--text); font:500 15px/1.7 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;}
+  .container{max-width:1100px;margin:0 auto;padding:24px}
+  header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  header .logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;font-weight:800;color:#fff;letter-spacing:.4px}
+  header h1{font-size:20px;margin:0}
+  header .meta{margin-left:auto;display:flex;gap:10px;align-items:center;color:var(--muted);font-size:13px}
+  .btn{border:1px solid var(--line); background:#fff; color:var(--text); padding:8px 12px; border-radius:12px; cursor:pointer; box-shadow:0 2px 0 #e9eef4}
+  .btn.primary{background:linear-gradient(135deg,#1b84ff,#49b3ff);color:#fff;border-color:transparent;font-weight:700}
+  .btn.ghost{background:transparent}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:0 20px 40px rgba(22,39,63,.05)}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .tabs button{all:unset;cursor:pointer;padding:8px 12px;border-radius:999px;border:1px solid var(--line);color:#2a3a59;background:#fff}
+  .tabs button[aria-selected="true"]{background:#f0f6ff;border-color:#b6d7ff;color:#183558}
+  .grid{display:grid;gap:16px}
+  .grid.cols-2{grid-template-columns:1.2fr .8fr}
+  @media (max-width:900px){.grid.cols-2{grid-template-columns:1fr}}
+  .pill{padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#2a3a59;font-size:13px;display:inline-flex;gap:8px;align-items:center}
+  .progress{height:12px;background:#eef3f8;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .progress>i{display:block;height:100%;background:linear-gradient(90deg,#1b84ff,#6ed0ff)}
+  .section-title{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px 0}
+  .section-title h2{margin:0;font-size:16px}
+  .stepper{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:10px}
+  .step{padding:10px;border-radius:12px;background:#fff;border:1px solid var(--line);text-align:center}
+  .step[data-state="done"]{background:#f3fff9;border-color:#bfe9dc}
+  .step[data-state="active"]{background:#f0f6ff;border-color:#b6d7ff}
+  .step small{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+  .step .dot{width:8px;height:8px;border-radius:999px;margin-inline:auto;margin-bottom:6px;background:#c9d5e7}
+  .step[data-state="done"] .dot{background:var(--ok)}
+  .step[data-state="active"] .dot{background:var(--accent)}
+  table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:12px;border:1px solid var(--line);background:#fff}
+  thead th{font-size:13px;text-align:left;color:#2a3a59;background:#f7fbff;padding:10px;position:sticky;top:0;border-bottom:1px solid var(--line)}
+  tbody td{padding:10px;border-top:1px solid var(--line)}
+  tbody tr:hover{background:#f9fcff}
+  .tag{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:4px 8px;display:inline-block}
+  .tag.ok{border-color:#bfe9dc;color:#096a50;background:#f3fff9}
+  .tag.warn{border-color:#ffe3b6;color:#7a5400;background:#fff7e8}
+  .tag.muted{color:#6b7895;background:#f1f4f9}
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">RG</div>
+      <h1>R.Good Service — พอร์ทัลลูกค้า (Light)</h1>
+      <div class="meta">
+        <span id="updatedAt">อัปเดตล่าสุด: —</span>
+        <button class="btn ghost" id="btnLine">ทัก LINE</button>
+        <button class="btn" id="btnProfile">โปรไฟล์</button>
+      </div>
+    </header>
 
+    <section class="card">
+      <div class="section-title">
+        <h2>ภาพรวมเคส: <span id="caseTitle">—</span></h2>
+        <div class="tabs" role="tablist">
+          <button role="tab" aria-selected="true" data-tab="dashboard">แดชบอร์ด</button>
+          <button role="tab" aria-selected="false" data-tab="documents">เอกสาร</button>
+          <button role="tab" aria-selected="false" data-tab="timeline">ไทม์ไลน์</button>
+          <button role="tab" aria-selected="false" data-tab="reminders">การแจ้งเตือน</button>
+        </div>
+      </div>
+
+      <div id="tab-dashboard" data-tabpanel="dashboard">
+        <div class="grid cols-2">
+          <div class="card" style="padding:16px">
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <div class="pill"><strong>เลขเคส:</strong> <span id="caseNo">—</span></div>
+              <div class="pill"><strong>สถานะ:</strong> <span id="caseStatus">—</span></div>
+              <div class="pill"><strong>ครบกำหนด:</strong> <span id="dueDate">—</span></div>
+            </div>
+            <div style="margin-top:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span>ความคืบหน้า</span>
+                <strong id="progressPct">0%</strong>
+              </div>
+              <div class="progress"><i id="progressBar" style="width:0%"></i></div>
+            </div>
+            <div class="stepper" style="margin-top:14px"></div>
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn primary" id="btnUpload">อัปโหลดเอกสาร</button>
+              <button class="btn" id="btnRequestHelp">ขอทีมช่วยต่ออายุ</button>
+              <button class="btn ghost" id="btnShare">แชร์ลิงก์ติดตาม</button>
+            </div>
+          </div>
+
+          <div class="card" style="padding:16px">
+            <div class="section-title">
+              <h2>สรุปเอกสาร</h2>
+              <button class="btn" id="btnNewDoc">เพิ่มเอกสาร</button>
+            </div>
+            <ul id="docSummary" style="list-style:none;padding:0;margin:0;display:grid;gap:8px"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-documents" data-tabpanel="documents" hidden>
+        <div class="section-title">
+          <h2>เอกสารทั้งหมด</h2>
+          <div style="display:flex;gap:8px">
+            <button class="btn" id="btnFilter">ตัวกรอง</button>
+            <button class="btn primary" id="btnAddDocument">อัปโหลดเอกสาร</button>
+          </div>
+        </div>
+        <div class="card" style="padding:0">
+          <div style="overflow:auto">
+            <table>
+              <thead><tr>
+                <th>ชนิด</th><th>เลขอ้างอิง</th><th>สถานะ</th><th>หมดอายุ</th><th>การกระทำ</th>
+              </tr></thead>
+              <tbody id="docsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-timeline" data-tabpanel="timeline" hidden>
+        <div class="section-title">
+          <h2>ไทม์ไลน์การเปลี่ยนแปลง</h2>
+          <button class="btn" id="btnRefreshTL">รีเฟรช</button>
+        </div>
+        <div id="timeline" style="display:grid;gap:10px"></div>
+      </div>
+
+      <div id="tab-reminders" data-tabpanel="reminders" hidden>
+        <div class="section-title">
+          <h2>การแจ้งเตือน</h2>
+          <button class="btn" id="btnNewReminder">เพิ่มการเตือน</button>
+        </div>
+        <div class="card">
+          <ul id="reminders" style="list-style:none;margin:0;padding:0;display:grid;gap:10px"></ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <dialog id="modalUpload">
+    <form method="dialog" style="max-width:520px">
+      <div style="padding:16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between">
+        <strong>อัปโหลดเอกสาร</strong><button class="btn" value="close">ปิด</button>
+      </div>
+      <div style="padding:16px">
+        <div style="display:grid;gap:8px;margin-bottom:8px">
+          <label>ชนิดเอกสาร</label>
+          <select id="docType" style="padding:10px;border:1px solid var(--line);border-radius:10px">
+            <option>สำเนาบัตรประชาชน</option>
+            <option>หนังสือมอบอำนาจ</option>
+            <option>เอกสารสมัครทะเบียนวัตถุอันตราย</option>
+          </select>
+        </div>
+        <div style="display:grid;gap:8px;margin-bottom:8px">
+          <label>ไฟล์</label><input type="file" id="docFile" style="padding:10px;border:1px solid var(--line);border-radius:10px"/>
+        </div>
+        <div style="display:grid;gap:8px;margin-bottom:8px">
+          <label>วันหมดอายุ (ถ้ามี)</label><input type="date" id="docExp" style="padding:10px;border:1px solid var(--line);border-radius:10px"/>
+        </div>
+        <menu style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn" value="cancel">ยกเลิก</button>
+          <button class="btn primary" id="confirmUpload" value="default">อัปโหลด</button>
+        </menu>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="modalReminder">
+    <form method="dialog" style="max-width:520px">
+      <div style="padding:16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between">
+        <strong>เพิ่มการเตือน</strong><button class="btn" value="close">ปิด</button>
+      </div>
+      <div style="padding:16px">
+        <div style="display:grid;gap:8px;margin-bottom:8px">
+          <label>หัวข้อ</label><input id="remTitle" style="padding:10px;border:1px solid var(--line);border-radius:10px" placeholder="ต่ออายุเอกสาร" />
+        </div>
+        <div style="display:grid;gap:8px;margin-bottom:8px">
+          <label>กำหนดวัน</label><input type="date" id="remDue" style="padding:10px;border:1px solid var(--line);border-radius:10px" />
+        </div>
+        <div style="display:grid;gap:8px;margin-bottom:8px">
+          <label>ช่องทาง</label>
+          <select id="remChannel" style="padding:10px;border:1px solid var(--line);border-radius:10px">
+            <option value="line">LINE</option>
+            <option value="email">อีเมล</option>
+          </select>
+        </div>
+        <menu style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn" value="cancel">ยกเลิก</button>
+          <button class="btn primary" id="confirmRem" value="default">บันทึก</button>
+        </menu>
+      </div>
+    </form>
+  </dialog>
+
+<script>
+// Demo data (เหมือนเวอร์ชันเข้ม)
+const CASE = {
+  id: "case_2025_0002",
+  public_token: "pk_XY9zL1m2",
+  case_no: "RG-AG-0002/2025",
+  title: "ต่ออายุทะเบียนสารกำจัดวัชพืช",
+  status: "ยื่นคำขอ",
+  progress_pct: 50,
+  due_date: "2025-11-15",
+  steps: [
+    { key:"receive", label:"รับเรื่อง", state:"done", dt:"2025-09-05" },
+    { key:"precheck", label:"ตรวจเอกสารเบื้องต้น", state:"done", dt:"2025-09-06" },
+    { key:"request_more", label:"ขอเอกสารเพิ่ม", state:"done", dt:"2025-09-08" },
+    { key:"submit", label:"ยื่นคำขอ", state:"active", dt:"—" },
+    { key:"waiting_gov", label:"รอผลหน่วยงานรัฐ", state:"pending", dt:"—" },
+    { key:"approved", label:"อนุมัติแล้ว", state:"pending", dt:"—" },
+    { key:"close", label:"ปิดเคส", state:"pending", dt:"—" },
+  ],
+  documents: [
+    { id:"d1", type:"สำเนาบัตรประชาชน", ref:"ID-2221", status:"ผ่าน", expires:"2026-02-10", url:"#"},
+    { id:"d2", type:"หนังสือมอบอำนาจ", ref:"POA-9090", status:"รอตรวจ", expires:"2025-12-10", url:"#"},
+  ],
+  timeline: [
+    { ts:"2025-09-08 12:24", text:"ลูกค้าอัปโหลดหนังสือมอบอำนาจ" },
+    { ts:"2025-09-06 15:11", text:"ตรวจเอกสารเบื้องต้นเสร็จ" },
+    { ts:"2025-09-05 09:00", text:"รับเรื่อง เปิดเลขเคส RG-AG-0002/2025" },
+  ],
+  reminders: [
+    { id:"r1", title:"ย้ำเอกสารตัวจริงก่อนยื่น", due:"2025-10-01", channel:"email" },
+  ],
+  line_deeplink: "https://line.me/R/ti/p/@991cyisb"
+};
+
+const $ = (s)=>document.querySelector(s);
+const $$ = (s)=>[...document.querySelectorAll(s)];
+
+function render(){
+  $("#caseTitle").textContent = CASE.title;
+  $("#caseNo").textContent = CASE.case_no;
+  $("#caseStatus").textContent = CASE.status;
+  $("#dueDate").textContent = CASE.due_date;
+  $("#updatedAt").textContent = "อัปเดตล่าสุด: " + new Date().toLocaleString('th-TH');
+  setProgress(CASE.progress_pct);
+  renderSteps();
+  renderDocSummary();
+  renderDocs();
+  renderTimeline();
+  renderReminders();
+}
+function setProgress(p){ $("#progressPct").textContent = p+"%"; $("#progressBar").style.width=p+"%"; }
+function renderSteps(){
+  const wrap = document.querySelector(".stepper"); wrap.innerHTML="";
+  CASE.steps.forEach(s=>{
+    const div = document.createElement("div");
+    div.className = "step"; div.dataset.state = s.state;
+    div.innerHTML = `<div class="dot"></div><strong>${s.label}</strong><small>${s.dt}</small>`;
+    wrap.appendChild(div);
+  });
+}
+function renderDocSummary(){
+  const list = $("#docSummary"); list.innerHTML="";
+  const passed = CASE.documents.filter(d=>d.status==="ผ่าน").length;
+  const waiting = CASE.documents.filter(d=>d.status==="รอตรวจ").length;
+  const expired = CASE.documents.filter(d=>d.expires!=="—" && new Date(d.expires) < new Date()).length;
+  [["ผ่านการตรวจ",passed,"ok"],["รอตรวจ",waiting,"muted"],["ใกล้หมดอายุ/หมดอายุ",expired,"warn"]].forEach(([label,val,cls])=>{
+    const li = document.createElement("li");
+    li.innerHTML = `<span class="pill">${label} <span class="tag ${cls}" style="margin-left:8px">${val}</span></span>`;
+    list.appendChild(li);
+  });
+}
+function renderDocs(){
+  const body = $("#docsBody"); body.innerHTML="";
+  CASE.documents.forEach(doc=>{
+    const tr = document.createElement("tr");
+    const cls = doc.status==="ผ่าน"?"ok":(doc.status==="รอตรวจ"?"muted":"warn");
+    tr.innerHTML = `<td>${doc.type}</td><td>${doc.ref}</td><td><span class="tag ${cls}">${doc.status}</span></td><td>${doc.expires}</td>
+                    <td style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn">ดาวน์โหลด</button><button class="btn">อัปโหลดใหม่</button></td>`;
+    body.appendChild(tr);
+  });
+}
+function renderTimeline(){
+  const wrap = $("#timeline"); wrap.innerHTML="";
+  CASE.timeline.forEach(ev=>{
+    const row = document.createElement("div");
+    row.className = "card";
+    row.style.padding="12px";
+    row.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><div>${ev.text}</div><time style="color:#6b7895;font-size:12px">${ev.ts}</time></div>`;
+    wrap.appendChild(row);
+  });
+}
+function renderReminders(){
+  const list = $("#reminders"); list.innerHTML="";
+  CASE.reminders.forEach(r=>{
+    const li = document.createElement("li");
+    li.className="card";
+    li.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px">
+      <div><div style="font-weight:700">${r.title}</div><div style="color:#6b7895;font-size:13px">กำหนด: ${r.due} • ช่องทาง: ${r.channel.toUpperCase()}</div></div>
+      <div style="display:flex;gap:8px"><button class="btn">ทดสอบส่ง</button><button class="btn">ลบ</button></div>
+    </div>`;
+    list.appendChild(li);
+  });
+}
+
+$$('[role="tab"]').forEach(tab=>tab.addEventListener('click',()=>{
+  $$('[role="tab"]').forEach(t=>t.setAttribute('aria-selected','false'));
+  tab.setAttribute('aria-selected','true');
+  const target = tab.dataset.tab;
+  $$('[data-tabpanel]').forEach(p=> p.hidden = p.id !== 'tab-'+target);
+}));
+
+$("#btnShare").addEventListener('click', ()=>{
+  const url = location.origin + location.pathname + "?track=" + CASE.public_token;
+  navigator.clipboard.writeText(url);
+  alert("คัดลอกลิงก์ติดตามแล้ว");
+});
+$("#btnLine").addEventListener('click', ()=> window.open(CASE.line_deeplink,'_blank'));
+
+// Event listeners for modals
+$("#btnUpload, #btnNewDoc, #btnAddDocument").forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('modalUpload').showModal();
+  });
+});
+
+$("#btnNewReminder").addEventListener('click', () => {
+  document.getElementById('modalReminder').showModal();
+});
+
+// Handle upload confirmation
+$("#confirmUpload").addEventListener('click', (e) => {
+  e.preventDefault();
+  const docType = $("#docType").value;
+  const file = $("#docFile").files[0];
+  const expDate = $("#docExp").value || "—";
+  
+  if (!file) {
+    alert("กรุณาเลือกไฟล์");
+    return;
+  }
+  
+  // สร้างเอกสารใหม่
+  const newDoc = {
+    id: "d" + (CASE.documents.length + 1),
+    type: docType,
+    ref: "REF-" + Math.random().toString(36).substr(2, 4).toUpperCase(),
+    status: "รอตรวจ",
+    expires: expDate,
+    url: "#"
+  };
+  
+  CASE.documents.push(newDoc);
+  
+  // เพิ่มไทม์ไลน์
+  CASE.timeline.unshift({
+    ts: new Date().toLocaleString('th-TH'),
+    text: `อัปโหลด${docType}แล้ว`
+  });
+  
+  // รีเฟรชหน้าจอ
+  renderDocs();
+  renderDocSummary();
+  renderTimeline();
+  
+  // ปิด modal
+  document.getElementById('modalUpload').close();
+  alert("อัปโหลดเอกสารสำเร็จ!");
+  
+  // ล้างฟอร์ม
+  $("#docFile").value = "";
+  $("#docExp").value = "";
+});
+
+// Handle reminder confirmation
+$("#confirmRem").addEventListener('click', (e) => {
+  e.preventDefault();
+  const title = $("#remTitle").value;
+  const due = $("#remDue").value;
+  const channel = $("#remChannel").value;
+  
+  if (!title || !due) {
+    alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+    return;
+  }
+  
+  // สร้างการเตือนใหม่
+  const newReminder = {
+    id: "r" + (CASE.reminders.length + 1),
+    title: title,
+    due: due,
+    channel: channel
+  };
+  
+  CASE.reminders.push(newReminder);
+  renderReminders();
+  
+  // ปิด modal
+  document.getElementById('modalReminder').close();
+  alert("เพิ่มการเตือนสำเร็จ!");
+  
+  // ล้างฟอร์ม
+  $("#remTitle").value = "";
+  $("#remDue").value = "";
+});
+
+render();
+</script>
+</body>
+</html>
