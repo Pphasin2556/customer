@@ -3,422 +3,1768 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>R.Good Service — พอร์ทัลลูกค้า (Light)</title>
-<meta name="description" content="ศูนย์เอกสารและติดตามสถานะแบบเรียลไทม์ — โทนสว่าง">
+<title>R.Good Service — Ultimate Customer Portal ✨</title>
+<meta name="description" content="ระบบติดตามสถานะแบบเรียลไทม์ พร้อมฟีเจอร์ครบครัน">
 <style>
-  :root{
-    --bg:#f6f9fc;
-    --card:#ffffff;
-    --text:#24324b;
-    --muted:#71829e;
-    --line:#e6eef6;
-    --accent:#1b84ff;
-    --accent-2:#49b3ff;
-    --ok:#0a9e78;
-    --warn:#d78b00;
-    --danger:#d64545;
-    --radius:16px;
+  :root {
+    --bg: #0a0f1c;
+    --bg-glass: rgba(15, 23, 42, 0.8);
+    --card: rgba(30, 41, 59, 0.95);
+    --card-hover: rgba(51, 65, 85, 0.95);
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: rgba(148, 163, 184, 0.2);
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --shadow: rgba(0, 0, 0, 0.5);
   }
-  *{box-sizing:border-box}
-  body{margin:0;background:
-    radial-gradient(800px 400px at 10% -10%, rgba(27,132,255,.08), transparent 60%),
-    radial-gradient(700px 350px at 110% 0%, rgba(73,179,255,.06), transparent 60%),
-    var(--bg); color:var(--text); font:500 15px/1.7 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;}
-  .container{max-width:1100px;margin:0 auto;padding:24px}
-  header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-  header .logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;font-weight:800;color:#fff;letter-spacing:.4px}
-  header h1{font-size:20px;margin:0}
-  header .meta{margin-left:auto;display:flex;gap:10px;align-items:center;color:var(--muted);font-size:13px}
-  .btn{border:1px solid var(--line); background:#fff; color:var(--text); padding:8px 12px; border-radius:12px; cursor:pointer; box-shadow:0 2px 0 #e9eef4}
-  .btn.primary{background:linear-gradient(135deg,#1b84ff,#49b3ff);color:#fff;border-color:transparent;font-weight:700}
-  .btn.ghost{background:transparent}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:0 20px 40px rgba(22,39,63,.05)}
-  .tabs{display:flex;gap:8px;flex-wrap:wrap}
-  .tabs button{all:unset;cursor:pointer;padding:8px 12px;border-radius:999px;border:1px solid var(--line);color:#2a3a59;background:#fff}
-  .tabs button[aria-selected="true"]{background:#f0f6ff;border-color:#b6d7ff;color:#183558}
-  .grid{display:grid;gap:16px}
-  .grid.cols-2{grid-template-columns:1.2fr .8fr}
-  @media (max-width:900px){.grid.cols-2{grid-template-columns:1fr}}
-  .pill{padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#2a3a59;font-size:13px;display:inline-flex;gap:8px;align-items:center}
-  .progress{height:12px;background:#eef3f8;border:1px solid var(--line);border-radius:999px;overflow:hidden}
-  .progress>i{display:block;height:100%;background:linear-gradient(90deg,#1b84ff,#6ed0ff)}
-  .section-title{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px 0}
-  .section-title h2{margin:0;font-size:16px}
-  .stepper{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:10px}
-  .step{padding:10px;border-radius:12px;background:#fff;border:1px solid var(--line);text-align:center}
-  .step[data-state="done"]{background:#f3fff9;border-color:#bfe9dc}
-  .step[data-state="active"]{background:#f0f6ff;border-color:#b6d7ff}
-  .step small{display:block;color:var(--muted);font-size:12px;margin-top:4px}
-  .step .dot{width:8px;height:8px;border-radius:999px;margin-inline:auto;margin-bottom:6px;background:#c9d5e7}
-  .step[data-state="done"] .dot{background:var(--ok)}
-  .step[data-state="active"] .dot{background:var(--accent)}
-  table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:12px;border:1px solid var(--line);background:#fff}
-  thead th{font-size:13px;text-align:left;color:#2a3a59;background:#f7fbff;padding:10px;position:sticky;top:0;border-bottom:1px solid var(--line)}
-  tbody td{padding:10px;border-top:1px solid var(--line)}
-  tbody tr:hover{background:#f9fcff}
-  .tag{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:4px 8px;display:inline-block}
-  .tag.ok{border-color:#bfe9dc;color:#096a50;background:#f3fff9}
-  .tag.warn{border-color:#ffe3b6;color:#7a5400;background:#fff7e8}
-  .tag.muted{color:#6b7895;background:#f1f4f9}
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15), transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.15), transparent 50%),
+      radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1), transparent 50%),
+      linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Header */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding: 24px;
+    background: var(--card);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px var(--shadow);
+  }
+  
+  .logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 20px;
+    color: white;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+  }
+  
+  .header-content h1 {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .header-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  .header-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .last-update {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card);
+    color: var(--text);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn:hover {
+    background: var(--card-hover);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+  }
+  
+  .btn.primary {
+    background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+    border-color: transparent;
+    color: white;
+    font-weight: 600;
+  }
+  
+  .btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.4);
+  }
+  
+  .btn.success {
+    background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+    border-color: transparent;
+    color: white;
+  }
+  
+  .btn.warning {
+    background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
+    border-color: transparent;
+    color: white;
+  }
+  
+  .btn.ghost {
+    background: transparent;
+    border-color: var(--border);
+  }
+  
+  /* Cards */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 24px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px var(--shadow);
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    background: var(--card-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px var(--shadow);
+  }
+  
+  /* Main Dashboard */
+  .main-section {
+    margin-bottom: 32px;
+  }
+  
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  
+  .tab {
+    padding: 12px 20px;
+    border-radius: 50px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+  
+  .tab.active {
+    background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+  }
+  
+  /* Grid Layout */
+  .grid {
+    display: grid;
+    gap: 24px;
+  }
+  
+  .grid-2 {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+  
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @media (max-width: 768px) {
+    .grid-2, .grid-3 {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Case Overview */
+  .case-info {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  
+  .info-pill {
+    padding: 8px 16px;
+    border-radius: 50px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  /* Progress Bar */
+  .progress-section {
+    margin: 24px 0;
+  }
+  
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .progress-bar {
+    height: 8px;
+    background: rgba(148, 163, 184, 0.2);
+    border-radius: 50px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent) 0%, #10b981 100%);
+    border-radius: 50px;
+    transition: width 0.8s ease;
+    position: relative;
+  }
+  
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 2s infinite;
+  }
+  
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  
+  /* Stepper */
+  .stepper {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+  }
+  
+  .step {
+    padding: 16px 8px;
+    text-align: center;
+    border-radius: 16px;
+    background: rgba(148, 163, 184, 0.1);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .step.completed {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: var(--success);
+  }
+  
+  .step.active {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: var(--accent);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+  
+  .step-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    margin: 0 auto 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .step.completed .step-dot {
+    background: var(--success);
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+  }
+  
+  .step.active .step-dot {
+    background: var(--accent);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+    animation: pulse-dot 2s infinite;
+  }
+  
+  @keyframes pulse-dot {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+  
+  .step-label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  
+  .step-date {
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+  
+  @media (max-width: 768px) {
+    .stepper {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      text-align: left;
+      padding: 12px 16px;
+    }
+    .step-dot {
+      margin: 0 12px 0 0;
+    }
+  }
+  
+  /* Documents Table */
+  .table-container {
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    background: var(--card);
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  thead {
+    background: rgba(59, 130, 246, 0.1);
+  }
+  
+  th, td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  th {
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  tbody tr:hover {
+    background: rgba(59, 130, 246, 0.05);
+  }
+  
+  .status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .status-badge.success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+  
+  .status-badge.warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+  
+  .status-badge.pending {
+    background: rgba(148, 163, 184, 0.1);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+  
+  /* Timeline */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .timeline-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px;
+    border-radius: 12px;
+    background: rgba(59, 130, 246, 0.05);
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .timeline-item:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+  
+  .timeline-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 4px;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+  }
+  
+  .timeline-content {
+    flex: 1;
+  }
+  
+  .timeline-text {
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  
+  .timeline-time {
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+  
+  /* Modals */
+  dialog {
+    padding: 0;
+    border: none;
+    border-radius: 20px;
+    background: var(--card);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 16px 64px rgba(0, 0, 0, 0.5);
+    color: var(--text);
+    max-width: 500px;
+    width: 90vw;
+  }
+  
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+  }
+  
+  .modal-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modal-title {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  
+  .modal-content {
+    padding: 24px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  
+  .form-input,
+  .form-select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text);
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  .form-input:focus,
+  .form-select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+  
+  /* Chat System */
+  .chat-container {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .chat-message {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    animation: slideIn 0.3s ease;
+  }
+  
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .chat-message.own {
+    flex-direction: row-reverse;
+  }
+  
+  .chat-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .chat-bubble {
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+  }
+  
+  .chat-message.own .chat-bubble {
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    color: white;
+    border-color: transparent;
+  }
+  
+  .chat-time {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  
+  .chat-input-area {
+    padding: 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .chat-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text);
+    resize: none;
+    min-height: 20px;
+    max-height: 100px;
+  }
+  
+  /* Notifications */
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    background: var(--card);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    box-shadow: 0 8px 32px var(--shadow);
+    backdrop-filter: blur(16px);
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    min-width: 300px;
+  }
+  
+  .notification.show {
+    transform: translateX(0);
+  }
+  
+  .notification.success {
+    border-color: rgba(16, 185, 129, 0.3);
+    background: rgba(16, 185, 129, 0.1);
+  }
+  
+  .notification.error {
+    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.1);
+  }
+  
+  /* Accessibility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  [aria-live] {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  
+  /* Loading States */
+  .loading {
+    opacity: 0.7;
+    pointer-events: none;
+    position: relative;
+  }
+  
+  .loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      padding: 16px;
+    }
+    
+    header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    
+    .header-actions {
+      margin-left: 0;
+      width: 100%;
+      justify-content: space-between;
+    }
+    
+    .case-info {
+      flex-direction: column;
+    }
+    
+    .btn {
+      font-size: 14px;
+      padding: 10px 16px;
+    }
+    
+    dialog {
+      width: 95vw;
+    }
+  }
 </style>
 </head>
 <body>
   <div class="container">
+    <!-- Header -->
     <header>
       <div class="logo">RG</div>
-      <h1>R.Good Service — พอร์ทัลลูกค้า (Light)</h1>
-      <div class="meta">
-        <span id="updatedAt">อัปเดตล่าสุด: —</span>
-        <button class="btn ghost" id="btnLine">ทัก LINE</button>
-        <button class="btn" id="btnProfile">โปรไฟล์</button>
+      <div class="header-content">
+        <h1>R.Good Service — Ultimate Portal ✨</h1>
+        <div class="header-status">
+          <div class="status-dot"></div>
+          <span>ระบบออนไลน์</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="last-update" id="lastUpdate">อัปเดตล่าสุด: —</div>
+        <button class="btn ghost" id="btnLine">💬 ทัก LINE</button>
+        <button class="btn" id="btnProfile">👤 โปรไฟล์</button>
       </div>
     </header>
 
-    <section class="card">
-      <div class="section-title">
-        <h2>ภาพรวมเคส: <span id="caseTitle">—</span></h2>
-        <div class="tabs" role="tablist">
-          <button role="tab" aria-selected="true" data-tab="dashboard">แดชบอร์ด</button>
-          <button role="tab" aria-selected="false" data-tab="documents">เอกสาร</button>
-          <button role="tab" aria-selected="false" data-tab="timeline">ไทม์ไลน์</button>
-          <button role="tab" aria-selected="false" data-tab="reminders">การแจ้งเตือน</button>
-        </div>
+    <!-- Main Content -->
+    <main class="main-section">
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" data-tab="dashboard">🏠 แดชบอร์ด</button>
+        <button class="tab" data-tab="documents">📄 เอกสาร</button>
+        <button class="tab" data-tab="timeline">⏰ ไทม์ไลน์</button>
+        <button class="tab" data-tab="reminders">🔔 การแจ้งเตือน</button>
+        <button class="tab" data-tab="chat">💬 แชท</button>
       </div>
 
-      <div id="tab-dashboard" data-tabpanel="dashboard">
-        <div class="grid cols-2">
-          <div class="card" style="padding:16px">
-            <div style="display:flex;gap:10px;flex-wrap:wrap">
-              <div class="pill"><strong>เลขเคส:</strong> <span id="caseNo">—</span></div>
-              <div class="pill"><strong>สถานะ:</strong> <span id="caseStatus">—</span></div>
-              <div class="pill"><strong>ครบกำหนด:</strong> <span id="dueDate">—</span></div>
+      <!-- Dashboard Tab -->
+      <div id="tab-dashboard" class="tab-content">
+        <div class="grid grid-2">
+          <!-- Case Overview -->
+          <div class="card">
+            <div class="section-header">
+              <div class="section-title">
+                📋 <span id="caseTitle">—</span>
+              </div>
             </div>
-            <div style="margin-top:12px">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <span>ความคืบหน้า</span>
+            
+            <div class="case-info">
+              <div class="info-pill">
+                <span>🔢</span>
+                <strong>เลขเคส:</strong> <span id="caseNo">—</span>
+              </div>
+              <div class="info-pill">
+                <span>📊</span>
+                <strong>สถานะ:</strong> <span id="caseStatus">—</span>
+              </div>
+              <div class="info-pill">
+                <span>⏳</span>
+                <strong>ครบกำหนด:</strong> <span id="dueDate">—</span>
+              </div>
+            </div>
+
+            <div class="progress-section">
+              <div class="progress-header">
+                <span>ความคืบหน้าโครงการ</span>
                 <strong id="progressPct">0%</strong>
               </div>
-              <div class="progress"><i id="progressBar" style="width:0%"></i></div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+              </div>
             </div>
-            <div class="stepper" style="margin-top:14px"></div>
-            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-              <button class="btn primary" id="btnUpload">อัปโหลดเอกสาร</button>
-              <button class="btn" id="btnRequestHelp">ขอทีมช่วยต่ออายุ</button>
-              <button class="btn ghost" id="btnShare">แชร์ลิงก์ติดตาม</button>
+
+            <!-- Stepper -->
+            <div class="stepper" id="stepper"></div>
+
+            <!-- Actions -->
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px;">
+              <button class="btn primary" id="btnUpload">📤 อัปโหลดเอกสาร</button>
+              <button class="btn success" id="btnRequestHelp">🛟 ขอทีมช่วยต่ออายุ</button>
+              <button class="btn warning" id="btnShare">🔗 แชร์ลิงก์ติดตาม</button>
             </div>
           </div>
 
-          <div class="card" style="padding:16px">
-            <div class="section-title">
-              <h2>สรุปเอกสาร</h2>
-              <button class="btn" id="btnNewDoc">เพิ่มเอกสาร</button>
+          <!-- Document Summary -->
+          <div class="card">
+            <div class="section-header">
+              <div class="section-title">📊 สรุปเอกสาร</div>
+              <button class="btn" id="btnNewDoc">➕ เพิ่มเอกสาร</button>
             </div>
-            <ul id="docSummary" style="list-style:none;padding:0;margin:0;display:grid;gap:8px"></ul>
+            <div id="docSummary" style="display: flex; flex-direction: column; gap: 12px;"></div>
           </div>
         </div>
       </div>
 
-      <div id="tab-documents" data-tabpanel="documents" hidden>
-        <div class="section-title">
-          <h2>เอกสารทั้งหมด</h2>
-          <div style="display:flex;gap:8px">
-            <button class="btn" id="btnFilter">ตัวกรอง</button>
-            <button class="btn primary" id="btnAddDocument">อัปโหลดเอกสาร</button>
+      <!-- Documents Tab -->
+      <div id="tab-documents" class="tab-content" style="display: none;">
+        <div class="section-header">
+          <div class="section-title">📄 เอกสารทั้งหมด</div>
+          <div style="display: flex; gap: 12px;">
+            <button class="btn" id="btnFilter">🔍 ตัวกรอง</button>
+            <button class="btn primary" id="btnAddDocument">📤 อัปโหลดเอกสาร</button>
           </div>
         </div>
-        <div class="card" style="padding:0">
-          <div style="overflow:auto">
-            <table>
-              <thead><tr>
-                <th>ชนิด</th><th>เลขอ้างอิง</th><th>สถานะ</th><th>หมดอายุ</th><th>การกระทำ</th>
-              </tr></thead>
-              <tbody id="docsBody"></tbody>
-            </table>
-          </div>
+        
+        <div class="card table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ชนิดเอกสาร</th>
+                <th>เลขอ้างอิง</th>
+                <th>สถานะ</th>
+                <th>วันหมดอายุ</th>
+                <th>การกระทำ</th>
+              </tr>
+            </thead>
+            <tbody id="documentsTable"></tbody>
+          </table>
         </div>
       </div>
 
-      <div id="tab-timeline" data-tabpanel="timeline" hidden>
-        <div class="section-title">
-          <h2>ไทม์ไลน์การเปลี่ยนแปลง</h2>
-          <button class="btn" id="btnRefreshTL">รีเฟรช</button>
+      <!-- Timeline Tab -->
+      <div id="tab-timeline" class="tab-content" style="display: none;">
+        <div class="section-header">
+          <div class="section-title">⏰ ไทม์ไลน์การเปลี่ยนแปลง</div>
+          <button class="btn" id="btnRefreshTimeline">🔄 รีเฟรช</button>
         </div>
-        <div id="timeline" style="display:grid;gap:10px"></div>
-      </div>
-
-      <div id="tab-reminders" data-tabpanel="reminders" hidden>
-        <div class="section-title">
-          <h2>การแจ้งเตือน</h2>
-          <button class="btn" id="btnNewReminder">เพิ่มการเตือน</button>
-        </div>
+        
         <div class="card">
-          <ul id="reminders" style="list-style:none;margin:0;padding:0;display:grid;gap:10px"></ul>
+          <div class="timeline" id="timeline"></div>
         </div>
       </div>
-    </section>
+
+      <!-- Reminders Tab -->
+      <div id="tab-reminders" class="tab-content" style="display: none;">
+        <div class="section-header">
+          <div class="section-title">🔔 การแจ้งเตือน</div>
+          <button class="btn primary" id="btnNewReminder">➕ เพิ่มการเตือน</button>
+        </div>
+        
+        <div class="card">
+          <div id="remindersList" style="display: flex; flex-direction: column; gap: 16px;"></div>
+        </div>
+      </div>
+
+      <!-- Chat Tab -->
+      <div id="tab-chat" class="tab-content" style="display: none;">
+        <div class="section-header">
+          <div class="section-title">💬 แชทกับทีมงาน</div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <div class="status-dot"></div>
+            <span style="color: var(--success); font-size: 14px;">ออนไลน์</span>
+          </div>
+        </div>
+        
+        <div class="card chat-container">
+          <div class="chat-messages" id="chatMessages"></div>
+          <div class="chat-input-area">
+            <textarea class="chat-input" id="chatInput" placeholder="พิมพ์ข้อความ..." rows="1"></textarea>
+            <button class="btn primary" id="btnSendMessage">📤</button>
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
 
+  <!-- Upload Document Modal -->
   <dialog id="modalUpload">
-    <form method="dialog" style="max-width:520px">
-      <div style="padding:16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between">
-        <strong>อัปโหลดเอกสาร</strong><button class="btn" value="close">ปิด</button>
+    <div class="modal-header">
+      <div class="modal-title">📤 อัปโหลดเอกสาร</div>
+      <button class="btn ghost" onclick="this.closest('dialog').close()">✕</button>
+    </div>
+    <div class="modal-content">
+      <div class="form-group">
+        <label class="form-label">ชนิดเอกสาร</label>
+        <select class="form-select" id="docType">
+          <option value="id-copy">สำเนาบัตรประชาชน</option>
+          <option value="power-of-attorney">หนังสือมอบอำนาจ</option>
+          <option value="registration-doc">เอกสารสมัครทะเบียนวัตถุอันตราย</option>
+          <option value="company-reg">หนังสือรับรองบริษัท</option>
+          <option value="tax-id">ใบ ภ.พ. 20</option>
+        </select>
       </div>
-      <div style="padding:16px">
-        <div style="display:grid;gap:8px;margin-bottom:8px">
-          <label>ชนิดเอกสาร</label>
-          <select id="docType" style="padding:10px;border:1px solid var(--line);border-radius:10px">
-            <option>สำเนาบัตรประชาชน</option>
-            <option>หนังสือมอบอำนาจ</option>
-            <option>เอกสารสมัครทะเบียนวัตถุอันตราย</option>
-          </select>
-        </div>
-        <div style="display:grid;gap:8px;margin-bottom:8px">
-          <label>ไฟล์</label><input type="file" id="docFile" style="padding:10px;border:1px solid var(--line);border-radius:10px"/>
-        </div>
-        <div style="display:grid;gap:8px;margin-bottom:8px">
-          <label>วันหมดอายุ (ถ้ามี)</label><input type="date" id="docExp" style="padding:10px;border:1px solid var(--line);border-radius:10px"/>
-        </div>
-        <menu style="display:flex;gap:8px;justify-content:flex-end">
-          <button class="btn" value="cancel">ยกเลิก</button>
-          <button class="btn primary" id="confirmUpload" value="default">อัปโหลด</button>
-        </menu>
+      <div class="form-group">
+        <label class="form-label">ไฟล์เอกสาร</label>
+        <input type="file" class="form-input" id="docFile" accept=".pdf,.jpg,.jpeg,.png" />
       </div>
-    </form>
+      <div class="form-group">
+        <label class="form-label">วันหมดอายุ (ถ้ามี)</label>
+        <input type="date" class="form-input" id="docExpiry" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">หมายเหตุ</label>
+        <textarea class="form-input" id="docNote" rows="3" placeholder="หมายเหตุเพิ่มเติม..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn ghost" onclick="this.closest('dialog').close()">ยกเลิก</button>
+        <button class="btn primary" id="confirmUpload">อัปโหลด</button>
+      </div>
+    </div>
   </dialog>
 
+  <!-- New Reminder Modal -->
   <dialog id="modalReminder">
-    <form method="dialog" style="max-width:520px">
-      <div style="padding:16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between">
-        <strong>เพิ่มการเตือน</strong><button class="btn" value="close">ปิด</button>
+    <div class="modal-header">
+      <div class="modal-title">🔔 เพิ่มการเตือนใหม่</div>
+      <button class="btn ghost" onclick="this.closest('dialog').close()">✕</button>
+    </div>
+    <div class="modal-content">
+      <div class="form-group">
+        <label class="form-label">หัวข้อการเตือน</label>
+        <input type="text" class="form-input" id="reminderTitle" placeholder="เช่น ต่ออายุเอกสาร..." />
       </div>
-      <div style="padding:16px">
-        <div style="display:grid;gap:8px;margin-bottom:8px">
-          <label>หัวข้อ</label><input id="remTitle" style="padding:10px;border:1px solid var(--line);border-radius:10px" placeholder="ต่ออายุเอกสาร" />
-        </div>
-        <div style="display:grid;gap:8px;margin-bottom:8px">
-          <label>กำหนดวัน</label><input type="date" id="remDue" style="padding:10px;border:1px solid var(--line);border-radius:10px" />
-        </div>
-        <div style="display:grid;gap:8px;margin-bottom:8px">
-          <label>ช่องทาง</label>
-          <select id="remChannel" style="padding:10px;border:1px solid var(--line);border-radius:10px">
-            <option value="line">LINE</option>
-            <option value="email">อีเมล</option>
-          </select>
-        </div>
-        <menu style="display:flex;gap:8px;justify-content:flex-end">
-          <button class="btn" value="cancel">ยกเลิก</button>
-          <button class="btn primary" id="confirmRem" value="default">บันทึก</button>
-        </menu>
+      <div class="form-group">
+        <label class="form-label">กำหนดวันที่</label>
+        <input type="date" class="form-input" id="reminderDate" />
       </div>
-    </form>
+      <div class="form-group">
+        <label class="form-label">ช่องทางแจ้งเตือน</label>
+        <select class="form-select" id="reminderChannel">
+          <option value="line">LINE</option>
+          <option value="email">อีเมล</option>
+          <option value="sms">SMS</option>
+          <option value="all">ทุกช่องทาง</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">แจ้งเตือนล่วงหน้า</label>
+        <select class="form-select" id="reminderAdvance">
+          <option value="1">1 วัน</option>
+          <option value="3">3 วัน</option>
+          <option value="7">7 วัน</option>
+          <option value="30">30 วัน</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn ghost" onclick="this.closest('dialog').close()">ยกเลิก</button>
+        <button class="btn primary" id="confirmReminder">บันทึก</button>
+      </div>
+    </div>
   </dialog>
+
+  <!-- Help Request Modal -->
+  <dialog id="modalHelp">
+    <div class="modal-header">
+      <div class="modal-title">🛟 ขอความช่วยเหลือ</div>
+      <button class="btn ghost" onclick="this.closest('dialog').close()">✕</button>
+    </div>
+    <div class="modal-content">
+      <div class="form-group">
+        <label class="form-label">ประเภทความช่วยเหลือ</label>
+        <select class="form-select" id="helpType">
+          <option value="renewal">ต่ออายุเอกสาร</option>
+          <option value="status">สอบถามสถานะ</option>
+          <option value="document">ปัญหาเอกสาร</option>
+          <option value="technical">ปัญหาเทคนิค</option>
+          <option value="other">อื่นๆ</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">รายละเอียด</label>
+        <textarea class="form-input" id="helpDetails" rows="4" placeholder="อธิบายปัญหาหรือความต้องการ..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ความเร่งด่วน</label>
+        <select class="form-select" id="helpPriority">
+          <option value="low">ปกติ</option>
+          <option value="medium">เร่งด่วนปานกลาง</option>
+          <option value="high">เร่งด่วนมาก</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn ghost" onclick="this.closest('dialog').close()">ยกเลิก</button>
+        <button class="btn success" id="confirmHelp">ส่งคำขอ</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Notification Container -->
+  <div id="notificationContainer"></div>
+
+  <!-- Accessibility -->
+  <div aria-live="polite" aria-atomic="true" class="sr-only" id="ariaLive"></div>
 
 <script>
-// Demo data (เหมือนเวอร์ชันเข้ม)
-const CASE = {
+// 🚀 ULTIMATE CUSTOMER PORTAL SYSTEM
+// Advanced Features: Real-time updates, Chat system, Enhanced UX
+
+const CASE_DATA = {
   id: "case_2025_0002",
-  public_token: "pk_XY9zL1m2",
-  case_no: "RG-AG-0002/2025",
+  publicToken: "pk_XY9zL1m2",
+  caseNo: "RG-AG-0002/2025",
   title: "ต่ออายุทะเบียนสารกำจัดวัชพืช",
   status: "ยื่นคำขอ",
-  progress_pct: 50,
-  due_date: "2025-11-15",
+  progressPct: 65,
+  dueDate: "2025-11-15",
   steps: [
-    { key:"receive", label:"รับเรื่อง", state:"done", dt:"2025-09-05" },
-    { key:"precheck", label:"ตรวจเอกสารเบื้องต้น", state:"done", dt:"2025-09-06" },
-    { key:"request_more", label:"ขอเอกสารเพิ่ม", state:"done", dt:"2025-09-08" },
-    { key:"submit", label:"ยื่นคำขอ", state:"active", dt:"—" },
-    { key:"waiting_gov", label:"รอผลหน่วยงานรัฐ", state:"pending", dt:"—" },
-    { key:"approved", label:"อนุมัติแล้ว", state:"pending", dt:"—" },
-    { key:"close", label:"ปิดเคส", state:"pending", dt:"—" },
+    { key: "receive", label: "รับเรื่อง", state: "completed", date: "2025-09-05" },
+    { key: "precheck", label: "ตรวจเอกสารเบื้องต้น", state: "completed", date: "2025-09-06" },
+    { key: "request_more", label: "ขอเอกสารเพิ่ม", state: "completed", date: "2025-09-08" },
+    { key: "submit", label: "ยื่นคำขอ", state: "active", date: "กำลังดำเนินการ" },
+    { key: "waiting_gov", label: "รอผลหน่วยงานรัฐ", state: "pending", date: "—" },
+    { key: "approved", label: "อนุมัติแล้ว", state: "pending", date: "—" },
+    { key: "close", label: "ปิดเคส", state: "pending", date: "—" }
   ],
   documents: [
-    { id:"d1", type:"สำเนาบัตรประชาชน", ref:"ID-2221", status:"ผ่าน", expires:"2026-02-10", url:"#"},
-    { id:"d2", type:"หนังสือมอบอำนาจ", ref:"POA-9090", status:"รอตรวจ", expires:"2025-12-10", url:"#"},
+    { id: "d1", type: "สำเนาบัตรประชาชน", ref: "ID-2221", status: "ผ่าน", expires: "2026-02-10", note: "เอกสารชัดเจน" },
+    { id: "d2", type: "หนังสือมอบอำนาจ", ref: "POA-9090", status: "รอตรวจ", expires: "2025-12-10", note: "กำลังตรวจสอบ" },
+    { id: "d3", type: "ใบ ภ.พ. 20", ref: "TAX-5555", status: "ต้องแก้ไข", expires: "2025-10-30", note: "ต้องการเอกสารใหม่" }
   ],
   timeline: [
-    { ts:"2025-09-08 12:24", text:"ลูกค้าอัปโหลดหนังสือมอบอำนาจ" },
-    { ts:"2025-09-06 15:11", text:"ตรวจเอกสารเบื้องต้นเสร็จ" },
-    { ts:"2025-09-05 09:00", text:"รับเรื่อง เปิดเลขเคส RG-AG-0002/2025" },
+    { timestamp: "2025-09-25 14:30", text: "ระบบอัปเดตสถานะเป็น 'ยื่นคำขอ'", type: "system" },
+    { timestamp: "2025-09-20 10:15", text: "ทีมงานตรวจสอบเอกสารเสร็จสิ้น", type: "staff" },
+    { timestamp: "2025-09-08 12:24", text: "ลูกค้าอัปโหลดหนังสือมอบอำนาจ", type: "user" },
+    { timestamp: "2025-09-06 15:11", text: "ตรวจเอกสารเบื้องต้นเสร็จสิ้น", type: "system" },
+    { timestamp: "2025-09-05 09:00", text: "รับเรื่อง เปิดเลขเคส RG-AG-0002/2025", type: "system" }
   ],
   reminders: [
-    { id:"r1", title:"ย้ำเอกสารตัวจริงก่อนยื่น", due:"2025-10-01", channel:"email" },
+    { id: "r1", title: "ย้ำเอกสารตัวจริงก่อนยื่น", due: "2025-10-01", channel: "email", priority: "medium", active: true },
+    { id: "r2", title: "ติดตามผลการอนุมัติ", due: "2025-10-15", channel: "line", priority: "high", active: true }
   ],
-  line_deeplink: "https://line.me/R/ti/p/@991cyisb"
+  chatMessages: [
+    { id: "m1", sender: "staff", name: "คุณสมชาย", message: "สวัสดีครับ มีข้อสงสัยเรื่องเอกสารไหมครับ", timestamp: "2025-09-25 09:00", avatar: "👨‍💼" },
+    { id: "m2", sender: "user", name: "คุณลูกค้า", message: "สวัสดีครับ อยากทราบว่าเอกสารผ่านหรือยังครับ", timestamp: "2025-09-25 09:30", avatar: "👤" },
+    { id: "m3", sender: "staff", name: "คุณสมชาย", message: "เอกสารส่วนใหญ่ผ่านแล้วครับ มีเพียงใบ ภ.พ. 20 ที่ต้องแก้ไขนิดหน่อย", timestamp: "2025-09-25 10:00", avatar: "👨‍💼" }
+  ],
+  lineDeeplink: "https://line.me/R/ti/p/@991cyisb"
 };
 
-const $ = (s)=>document.querySelector(s);
-const $$ = (s)=>[...document.querySelectorAll(s)];
+// 🛠️ Utility Functions
+const $ = (selector) => document.querySelector(selector);
+const $ = (selector) => [...document.querySelectorAll(selector)];
 
-function render(){
-  $("#caseTitle").textContent = CASE.title;
-  $("#caseNo").textContent = CASE.case_no;
-  $("#caseStatus").textContent = CASE.status;
-  $("#dueDate").textContent = CASE.due_date;
-  $("#updatedAt").textContent = "อัปเดตล่าสุด: " + new Date().toLocaleString('th-TH');
-  setProgress(CASE.progress_pct);
-  renderSteps();
-  renderDocSummary();
-  renderDocs();
-  renderTimeline();
-  renderReminders();
-}
-function setProgress(p){ $("#progressPct").textContent = p+"%"; $("#progressBar").style.width=p+"%"; }
-function renderSteps(){
-  const wrap = document.querySelector(".stepper"); wrap.innerHTML="";
-  CASE.steps.forEach(s=>{
-    const div = document.createElement("div");
-    div.className = "step"; div.dataset.state = s.state;
-    div.innerHTML = `<div class="dot"></div><strong>${s.label}</strong><small>${s.dt}</small>`;
-    wrap.appendChild(div);
-  });
-}
-function renderDocSummary(){
-  const list = $("#docSummary"); list.innerHTML="";
-  const passed = CASE.documents.filter(d=>d.status==="ผ่าน").length;
-  const waiting = CASE.documents.filter(d=>d.status==="รอตรวจ").length;
-  const expired = CASE.documents.filter(d=>d.expires!=="—" && new Date(d.expires) < new Date()).length;
-  [["ผ่านการตรวจ",passed,"ok"],["รอตรวจ",waiting,"muted"],["ใกล้หมดอายุ/หมดอายุ",expired,"warn"]].forEach(([label,val,cls])=>{
-    const li = document.createElement("li");
-    li.innerHTML = `<span class="pill">${label} <span class="tag ${cls}" style="margin-left:8px">${val}</span></span>`;
-    list.appendChild(li);
-  });
-}
-function renderDocs(){
-  const body = $("#docsBody"); body.innerHTML="";
-  CASE.documents.forEach(doc=>{
-    const tr = document.createElement("tr");
-    const cls = doc.status==="ผ่าน"?"ok":(doc.status==="รอตรวจ"?"muted":"warn");
-    tr.innerHTML = `<td>${doc.type}</td><td>${doc.ref}</td><td><span class="tag ${cls}">${doc.status}</span></td><td>${doc.expires}</td>
-                    <td style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn">ดาวน์โหลด</button><button class="btn">อัปโหลดใหม่</button></td>`;
-    body.appendChild(tr);
-  });
-}
-function renderTimeline(){
-  const wrap = $("#timeline"); wrap.innerHTML="";
-  CASE.timeline.forEach(ev=>{
-    const row = document.createElement("div");
-    row.className = "card";
-    row.style.padding="12px";
-    row.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><div>${ev.text}</div><time style="color:#6b7895;font-size:12px">${ev.ts}</time></div>`;
-    wrap.appendChild(row);
-  });
-}
-function renderReminders(){
-  const list = $("#reminders"); list.innerHTML="";
-  CASE.reminders.forEach(r=>{
-    const li = document.createElement("li");
-    li.className="card";
-    li.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px">
-      <div><div style="font-weight:700">${r.title}</div><div style="color:#6b7895;font-size:13px">กำหนด: ${r.due} • ช่องทาง: ${r.channel.toUpperCase()}</div></div>
-      <div style="display:flex;gap:8px"><button class="btn">ทดสอบส่ง</button><button class="btn">ลบ</button></div>
-    </div>`;
-    list.appendChild(li);
+function formatDate(dateString) {
+  return new Date(dateString).toLocaleDateString('th-TH', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
   });
 }
 
-$$('[role="tab"]').forEach(tab=>tab.addEventListener('click',()=>{
-  $$('[role="tab"]').forEach(t=>t.setAttribute('aria-selected','false'));
-  tab.setAttribute('aria-selected','true');
-  const target = tab.dataset.tab;
-  $$('[data-tabpanel]').forEach(p=> p.hidden = p.id !== 'tab-'+target);
-}));
+function formatDateTime(dateString) {
+  return new Date(dateString).toLocaleString('th-TH');
+}
 
-$("#btnShare").addEventListener('click', ()=>{
-  const url = location.origin + location.pathname + "?track=" + CASE.public_token;
-  navigator.clipboard.writeText(url);
-  alert("คัดลอกลิงก์ติดตามแล้ว");
-});
-$("#btnLine").addEventListener('click', ()=> window.open(CASE.line_deeplink,'_blank'));
+function getStatusClass(status) {
+  const statusMap = {
+    'ผ่าน': 'success',
+    'รอตรวจ': 'pending',
+    'ต้องแก้ไข': 'warning'
+  };
+  return statusMap[status] || 'pending';
+}
 
-// Event listeners for modals
-$("#btnUpload, #btnNewDoc, #btnAddDocument").forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.getElementById('modalUpload').showModal();
+// 🔔 Notification System
+function showNotification(message, type = 'success', duration = 4000) {
+  const container = $('#notificationContainer');
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.innerHTML = `
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+      <span>${message}</span>
+    </div>
+  `;
+  
+  container.appendChild(notification);
+  
+  // Show animation
+  setTimeout(() => notification.classList.add('show'), 100);
+  
+  // Auto hide
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => container.removeChild(notification), 300);
+  }, duration);
+  
+  // Update aria-live
+  $('#ariaLive').textContent = message;
+}
+
+// 🎨 Render Functions
+function renderCaseOverview() {
+  $('#caseTitle').textContent = CASE_DATA.title;
+  $('#caseNo').textContent = CASE_DATA.caseNo;
+  $('#caseStatus').textContent = CASE_DATA.status;
+  $('#dueDate').textContent = formatDate(CASE_DATA.dueDate);
+  $('#progressPct').textContent = `${CASE_DATA.progressPct}%`;
+  $('#progressFill').style.width = `${CASE_DATA.progressPct}%`;
+  $('#lastUpdate').textContent = `อัปเดตล่าสุด: ${formatDateTime(new Date())}`;
+}
+
+function renderStepper() {
+  const stepper = $('#stepper');
+  stepper.innerHTML = '';
+  
+  CASE_DATA.steps.forEach(step => {
+    const stepEl = document.createElement('div');
+    stepEl.className = `step ${step.state}`;
+    stepEl.innerHTML = `
+      <div class="step-dot"></div>
+      <div class="step-label">${step.label}</div>
+      <div class="step-date">${step.date}</div>
+    `;
+    stepper.appendChild(stepEl);
   });
-});
+}
 
-$("#btnNewReminder").addEventListener('click', () => {
-  document.getElementById('modalReminder').showModal();
-});
+function renderDocumentSummary() {
+  const container = $('#docSummary');
+  container.innerHTML = '';
+  
+  const stats = {
+    total: CASE_DATA.documents.length,
+    passed: CASE_DATA.documents.filter(d => d.status === 'ผ่าน').length,
+    pending: CASE_DATA.documents.filter(d => d.status === 'รอตรวจ').length,
+    needFix: CASE_DATA.documents.filter(d => d.status === 'ต้องแก้ไข').length
+  };
+  
+  const summaryItems = [
+    { label: 'เอกสารทั้งหมด', count: stats.total, class: 'pending' },
+    { label: 'ผ่านการตรวจ', count: stats.passed, class: 'success' },
+    { label: 'รอตรวจสอบ', count: stats.pending, class: 'pending' },
+    { label: 'ต้องแก้ไข', count: stats.needFix, class: 'warning' }
+  ];
+  
+  summaryItems.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'info-pill';
+    div.innerHTML = `
+      <span>${item.label}</span>
+      <span class="status-badge ${item.class}">${item.count}</span>
+    `;
+    container.appendChild(div);
+  });
+}
 
-// Handle upload confirmation
-$("#confirmUpload").addEventListener('click', (e) => {
-  e.preventDefault();
-  const docType = $("#docType").value;
-  const file = $("#docFile").files[0];
-  const expDate = $("#docExp").value || "—";
+function renderDocumentsTable() {
+  const tbody = $('#documentsTable');
+  tbody.innerHTML = '';
+  
+  CASE_DATA.documents.forEach(doc => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${doc.type}</td>
+      <td><code>${doc.ref}</code></td>
+      <td><span class="status-badge ${getStatusClass(doc.status)}">${doc.status}</span></td>
+      <td>${formatDate(doc.expires)}</td>
+      <td>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="btn" onclick="downloadDocument('${doc.id}')">📥 ดาวน์โหลด</button>
+          <button class="btn warning" onclick="reuploadDocument('${doc.id}')">🔄 อัปโหลดใหม่</button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderTimeline() {
+  const timeline = $('#timeline');
+  timeline.innerHTML = '';
+  
+  CASE_DATA.timeline.forEach(event => {
+    const item = document.createElement('div');
+    item.className = 'timeline-item';
+    
+    const typeIcons = {
+      'system': '🤖',
+      'staff': '👨‍💼', 
+      'user': '👤'
+    };
+    
+    item.innerHTML = `
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-text">
+          ${typeIcons[event.type] || '📋'} ${event.text}
+        </div>
+        <div class="timeline-time">${formatDateTime(event.timestamp)}</div>
+      </div>
+    `;
+    timeline.appendChild(item);
+  });
+}
+
+function renderReminders() {
+  const container = $('#remindersList');
+  container.innerHTML = '';
+  
+  if (CASE_DATA.reminders.length === 0) {
+    container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 40px;">ไม่มีการเตือนที่ตั้งไว้</div>';
+    return;
+  }
+  
+  CASE_DATA.reminders.forEach(reminder => {
+    const item = document.createElement('div');
+    item.className = 'card';
+    item.style.padding = '16px';
+    
+    const priorityColors = {
+      'low': 'var(--text-muted)',
+      'medium': 'var(--warning)',
+      'high': 'var(--danger)'
+    };
+    
+    const channelIcons = {
+      'line': '💬',
+      'email': '📧',
+      'sms': '📱',
+      'all': '🌐'
+    };
+    
+    item.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+        <div style="flex: 1;">
+          <div style="font-weight: 600; margin-bottom: 8px; color: ${priorityColors[reminder.priority]};">
+            🔔 ${reminder.title}
+          </div>
+          <div style="color: var(--text-muted); font-size: 14px;">
+            📅 ${formatDate(reminder.due)} • ${channelIcons[reminder.channel]} ${reminder.channel.toUpperCase()}
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn" onclick="testReminder('${reminder.id}')">🧪 ทดสอบส่ง</button>
+          <button class="btn warning" onclick="deleteReminder('${reminder.id}')">🗑️ ลบ</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(item);
+  });
+}
+
+function renderChat() {
+  const container = $('#chatMessages');
+  container.innerHTML = '';
+  
+  CASE_DATA.chatMessages.forEach(msg => {
+    const messageEl = document.createElement('div');
+    messageEl.className = `chat-message ${msg.sender === 'user' ? 'own' : ''}`;
+    messageEl.innerHTML = `
+      <div class="chat-avatar">${msg.avatar}</div>
+      <div>
+        <div class="chat-bubble">
+          <div>${msg.message}</div>
+          <div class="chat-time">${formatDateTime(msg.timestamp)}</div>
+        </div>
+      </div>
+    `;
+    container.appendChild(messageEl);
+  });
+  
+  // Auto scroll to bottom
+  container.scrollTop = container.scrollHeight;
+}
+
+// 🎯 Event Handlers
+function handleTabSwitch(tabName) {
+  // Update tab buttons
+  $('.tab').forEach(tab => {
+    tab.classList.toggle('active', tab.dataset.tab === tabName);
+  });
+  
+  // Update content
+  $('.tab-content').forEach(content => {
+    content.style.display = content.id === `tab-${tabName}` ? 'block' : 'none';
+  });
+  
+  // Render content if needed
+  switch(tabName) {
+    case 'documents':
+      renderDocumentsTable();
+      break;
+    case 'timeline':
+      renderTimeline();
+      break;
+    case 'reminders':
+      renderReminders();
+      break;
+    case 'chat':
+      renderChat();
+      break;
+  }
+}
+
+// 📤 Document Upload
+function handleDocumentUpload() {
+  const type = $('#docType').value;
+  const file = $('#docFile').files[0];
+  const expiry = $('#docExpiry').value;
+  const note = $('#docNote').value;
   
   if (!file) {
-    alert("กรุณาเลือกไฟล์");
+    showNotification('กรุณาเลือกไฟล์เอกสาร', 'error');
     return;
   }
   
-  // สร้างเอกสารใหม่
+  // Simulate upload
   const newDoc = {
-    id: "d" + (CASE.documents.length + 1),
-    type: docType,
-    ref: "REF-" + Math.random().toString(36).substr(2, 4).toUpperCase(),
-    status: "รอตรวจ",
-    expires: expDate,
-    url: "#"
+    id: `d${CASE_DATA.documents.length + 1}`,
+    type: $('#docType option:checked').text,
+    ref: `REF-${Math.random().toString(36).substr(2, 4).toUpperCase()}`,
+    status: 'รอตรวจ',
+    expires: expiry || '—',
+    note: note || 'อัปโหลดโดยลูกค้า'
   };
   
-  CASE.documents.push(newDoc);
+  CASE_DATA.documents.push(newDoc);
   
-  // เพิ่มไทม์ไลน์
-  CASE.timeline.unshift({
-    ts: new Date().toLocaleString('th-TH'),
-    text: `อัปโหลด${docType}แล้ว`
+  // Add timeline entry
+  CASE_DATA.timeline.unshift({
+    timestamp: new Date().toISOString(),
+    text: `อัปโหลด${newDoc.type}แล้ว`,
+    type: 'user'
   });
   
-  // รีเฟรชหน้าจอ
-  renderDocs();
-  renderDocSummary();
-  renderTimeline();
+  // Update UI
+  renderDocumentSummary();
+  if ($('#tab-documents').style.display !== 'none') {
+    renderDocumentsTable();
+  }
   
-  // ปิด modal
-  document.getElementById('modalUpload').close();
-  alert("อัปโหลดเอกสารสำเร็จ!");
+  // Close modal and show notification
+  $('#modalUpload').close();
+  showNotification('อัปโหลดเอกสารสำเร็จ!', 'success');
   
-  // ล้างฟอร์ม
-  $("#docFile").value = "";
-  $("#docExp").value = "";
-});
+  // Clear form
+  $('#docFile').value = '';
+  $('#docExpiry').value = '';
+  $('#docNote').value = '';
+}
 
-// Handle reminder confirmation
-$("#confirmRem").addEventListener('click', (e) => {
-  e.preventDefault();
-  const title = $("#remTitle").value;
-  const due = $("#remDue").value;
-  const channel = $("#remChannel").value;
+// 🔔 Reminder Management
+function handleNewReminder() {
+  const title = $('#reminderTitle').value;
+  const date = $('#reminderDate').value;
+  const channel = $('#reminderChannel').value;
+  const advance = $('#reminderAdvance').value;
   
-  if (!title || !due) {
-    alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+  if (!title || !date) {
+    showNotification('กรุณากรอกข้อมูลให้ครบถ้วน', 'error');
     return;
   }
   
-  // สร้างการเตือนใหม่
   const newReminder = {
-    id: "r" + (CASE.reminders.length + 1),
+    id: `r${CASE_DATA.reminders.length + 1}`,
     title: title,
-    due: due,
-    channel: channel
+    due: date,
+    channel: channel,
+    priority: 'medium',
+    active: true
   };
   
-  CASE.reminders.push(newReminder);
-  renderReminders();
+  CASE_DATA.reminders.push(newReminder);
   
-  // ปิด modal
-  document.getElementById('modalReminder').close();
-  alert("เพิ่มการเตือนสำเร็จ!");
+  // Update UI
+  if ($('#tab-reminders').style.display !== 'none') {
+    renderReminders();
+  }
   
-  // ล้างฟอร์ม
-  $("#remTitle").value = "";
-  $("#remDue").value = "";
-});
+  // Close modal and show notification
+  $('#modalReminder').close();
+  showNotification('เพิ่มการเตือนสำเร็จ!', 'success');
+  
+  // Clear form
+  $('#reminderTitle').value = '';
+  $('#reminderDate').value = '';
+}
 
-render();
+// 🛟 Help Request
+function handleHelpRequest() {
+  const type = $('#helpType').value;
+  const details = $('#helpDetails').value;
+  const priority = $('#helpPriority').value;
+  
+  if (!details.trim()) {
+    showNotification('กรุณาระบุรายละเอียด', 'error');
+    return;
+  }
+  
+  // Add to timeline
+  CASE_DATA.timeline.unshift({
+    timestamp: new Date().toISOString(),
+    text: `ส่งคำขอความช่วยเหลือ: ${$('#helpType option:checked').text}`,
+    type: 'user'
+  });
+  
+  // Close modal and show notification
+  $('#modalHelp').close();
+  showNotification('ส่งคำขอความช่วยเหลือสำเร็จ! ทีมงานจะติดต่อกลับภายใน 24 ชั่วโมง', 'success', 6000);
+  
+  // Clear form
+  $('#helpDetails').value = '';
+}
+
+// 💬 Chat Functions
+function sendMessage() {
+  const input = $('#chatInput');
+  const message = input.value.trim();
+  
+  if (!message) return;
+  
+  // Add user message
+  const userMessage = {
+    id: `m${CASE_DATA.chatMessages.length + 1}`,
+    sender: 'user',
+    name: 'คุณลูกค้า',
+    message: message,
+    timestamp: new Date().toISOString(),
+    avatar: '👤'
+  };
+  
+  CASE_DATA.chatMessages.push(userMessage);
+  
+  // Auto-reply simulation
+  setTimeout(() => {
+    const replies = [
+      'ขอบคุณสำหรับข้อความครับ เรากำลังตรวจสอบข้อมูลให้',
+      'เรารับทราบแล้วครับ จะดำเนินการและแจ้งกลับให้ทราบ',
+      'ขอบคุณครับ ทีมงานจะติดต่อกลับภายใน 1-2 ชั่วโมง',
+      'เรียบร้อยครับ ขอเวลาตรวจสอบข้อมูลสักครู่'
+    ];
+    
+    const autoReply = {
+      id: `m${CASE_DATA.chatMessages.length + 1}`,
+      sender: 'staff',
+      name: 'คุณสมชาย',
+      message: replies[Math.floor(Math.random() * replies.length)],
+      timestamp: new Date().toISOString(),
+      avatar: '👨‍💼'
+    };
+    
+    CASE_DATA.chatMessages.push(autoReply);
+    
+    if ($('#tab-chat').style.display !== 'none') {
+      renderChat();
+    }
+  }, 1500);
+  
+  // Clear input and re-render
+  input.value = '';
+  if ($('#tab-chat').style.display !== 'none') {
+    renderChat();
+  }
+}
+
+// 🔧 Utility Functions
+function downloadDocument(docId) {
+  showNotification('เริ่มดาวน์โหลดเอกสาร...', 'success');
+  // Simulate download
+}
+
+function reuploadDocument(docId) {
+  $('#modalUpload').showModal();
+}
+
+function testReminder(reminderId) {
+  showNotification('ส่งการทดสอบแจ้งเตือนแล้ว', 'success');
+}
+
+function deleteReminder(reminderId) {
+  if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบการเตือนนี้?')) {
+    CASE_DATA.reminders = CASE_DATA.reminders.filter(r => r.id !== reminderId);
+    renderReminders();
+    showNotification('ลบการเตือนสำเร็จ', 'success');
+  }
+}
+
+function shareTrackingLink() {
+  const url = `${window.location.origin}${window.location.pathname}?track=${CASE_DATA.publicToken}`;
+  navigator.clipboard.writeText(url).then(() => {
+    showNotification('คัดลอกลิงก์ติดตามแล้ว!', 'success');
+  });
+}
+
+function openLineChat() {
+  window.open(CASE_DATA.lineDeeplink, '_blank');
+}
+
+// 🔄 Real-time Updates Simulation
+function simulateRealTimeUpdates() {
+  setInterval(() => {
+    // Random chance to update progress
+    if (Math.random() < 0.1) { // 10% chance every 30 seconds
+      CASE_DATA.progressPct = Math.min(100, CASE_DATA.progressPct + Math.floor(Math.random() * 5));
+      $('#progressPct').textContent = `${CASE_DATA.progressPct}%`;
+      $('#progressFill').style.width = `${CASE_DATA.progressPct}%`;
+      
+      // Add timeline entry
+      CASE_DATA.timeline.unshift({
+        timestamp: new Date().toISOString(),
+        text: 'อัปเดตความคืบหน้าโครงการ',
+        type: 'system'
+      });
+      
+      if ($('#tab-timeline').style.display !== 'none') {
+        renderTimeline();
+      }
+    }
+    
+    // Update last update time
+    $('#lastUpdate').textContent = `อัปเดตล่าสุด: ${formatDateTime(new Date())}`;
+  }, 30000); // Every 30 seconds
+}
+
+// 🎨 Enhanced UI Interactions
+function addAdvancedInteractions() {
+  // Auto-resize chat textarea
+  const chatInput = $('#chatInput');
+  chatInput.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+  });
+  
+  // Enter to send message
+  chatInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+  
+  // Progress bar animation on load
+  setTimeout(() => {
+    $('#progressFill').style.width = `${CASE_DATA.progressPct}%`;
+  }, 500);
+  
+  // Add subtle hover effects to cards
+  $('.card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-2px)';
+    });
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0)';
+    });
+  });
+}
+
+// 🔍 Search and Filter Functions
+function filterDocuments(status = 'all') {
+  const filtered = status === 'all' 
+    ? CASE_DATA.documents 
+    : CASE_DATA.documents.filter(doc => doc.status === status);
+    
+  renderDocumentsTable(filtered);
+}
+
+// 📊 Analytics and Reporting
+function generateCaseReport() {
+  const report = {
+    caseInfo: {
+      number: CASE_DATA.caseNo,
+      title: CASE_DATA.title,
+      progress: CASE_DATA.progressPct,
+      status: CASE_DATA.status
+    },
+    documents: {
+      total: CASE_DATA.documents.length,
+      passed: CASE_DATA.documents.filter(d => d.status === 'ผ่าน').length,
+      pending: CASE_DATA.documents.filter(d => d.status === 'รอตรวจ').length,
+      needFix: CASE_DATA.documents.filter(d => d.status === 'ต้องแก้ไข').length
+    },
+    timeline: CASE_DATA.timeline.length,
+    reminders: CASE_DATA.reminders.length
+  };
+  
+  console.log('📊 Case Report:', report);
+  return report;
+}
+
+// 🚀 Initialize Application
+function initializeApp() {
+  // Render initial content
+  renderCaseOverview();
+  renderStepper();
+  renderDocumentSummary();
+  
+  // Set up event listeners
+  
+  // Tab navigation
+  $('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      handleTabSwitch(tab.dataset.tab);
+    });
+  });
+  
+  // Modal triggers
+  $('#btnUpload, #btnNewDoc, #btnAddDocument').addEventListener('click', () => {
+    $('#modalUpload').showModal();
+  });
+  
+  $('#btnNewReminder').addEventListener('click', () => {
+    $('#modalReminder').showModal();
+  });
+  
+  $('#btnRequestHelp').addEventListener('click', () => {
+    $('#modalHelp').showModal();
+  });
+  
+  // Form submissions
+  $('#confirmUpload').addEventListener('click', handleDocumentUpload);
+  $('#confirmReminder').addEventListener('click', handleNewReminder);
+  $('#confirmHelp').addEventListener('click', handleHelpRequest);
+  
+  // Other actions
+  $('#btnShare').addEventListener('click', shareTrackingLink);
+  $('#btnLine').addEventListener('click', openLineChat);
+  $('#btnSendMessage').addEventListener('click', sendMessage);
+  
+  // Refresh buttons
+  $('#btnRefreshTimeline').addEventListener('click', renderTimeline);
+  
+  // Enhanced interactions
+  addAdvancedInteractions();
+  
+  // Start real-time updates
+  simulateRealTimeUpdates();
+  
+  // Welcome notification
+  setTimeout(() => {
+    showNotification('🎉 ยินดีต้อนรับสู่ระบบติดตามสถานะ R.Good Service!', 'success', 5000);
+  }, 1000);
+  
+  // Generate initial report
+  generateCaseReport();
+  
+  console.log('🚀 Ultimate Customer Portal initialized successfully!');
+}
+
+// 📱 PWA Support (Optional)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    // Service worker registration would go here for PWA support
+    console.log('💡 PWA support available');
+  });
+}
+
+// 🌐 Supabase Real-time Integration (Template)
+/*
+// Uncomment and configure for real database integration
+
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient(
+  'YOUR_SUPABASE_URL',
+  'YOUR_SUPABASE_ANON_KEY'
+)
+
+function setupRealtimeSubscription() {
+  // Subscribe to case updates
+  const caseSubscription = supabase
+    .channel('case-updates')
+    .on('postgres_changes', {
+      event: '*',
+      schema: 'public',
+      table: 'cases',
+      filter: `id=eq.${CASE_DATA.id}`
+    }, (payload) => {
+      console.log('Case updated:', payload);
+      // Update UI with new data
+      Object.assign(CASE_DATA, payload.new);
+      renderCaseOverview();
+      showNotification('สถานะเคสอัปเดตแล้ว!', 'success');
+    })
+    .subscribe();
+
+  // Subscribe to document updates
+  const docsSubscription = supabase
+    .channel('document-updates')
+    .on('postgres_changes', {
+      event: '*',
+      schema: 'public',
+      table: 'documents',
+      filter: `case_id=eq.${CASE_DATA.id}`
+    }, (payload) => {
+      console.log('Document updated:', payload);
+      // Update documents array
+      if (payload.eventType === 'INSERT') {
+        CASE_DATA.documents.push(payload.new);
+      } else if (payload.eventType === 'UPDATE') {
+        const index = CASE_DATA.documents.findIndex(d => d.id === payload.new.id);
+        if (index !== -1) {
+          CASE_DATA.documents[index] = payload.new;
+        }
+      }
+      renderDocumentSummary();
+      if ($('#tab-documents').style.display !== 'none') {
+        renderDocumentsTable();
+      }
+      showNotification('เอกสารอัปเดตแล้ว!', 'success');
+    })
+    .subscribe();
+}
+*/
+
+// 🎯 Start the application
+document.addEventListener('DOMContentLoaded', initializeApp);
+
 </script>
 </body>
 </html>
